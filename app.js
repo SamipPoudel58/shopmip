@@ -20,7 +20,7 @@ const morgan = require("morgan");
 
 // store sessions in database
 const store = new MongoDBStore({
-  uri: MONGO_LOCAL,
+  uri: MONGO_ATLAS,
   collection: "sessions",
 });
 
@@ -129,7 +129,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(MONGO_LOCAL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_ATLAS, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
     app.listen(process.env.PORT || 4000);
     console.log("connected to Database");
