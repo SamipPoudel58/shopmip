@@ -16,7 +16,7 @@ const flash = require("connect-flash");
 const multer = require("multer");
 const helmet = require("helmet");
 const compression = require("compression"); // necessary for heroku not aws,gcp,azure
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 // store sessions in database
 const store = new MongoDBStore({
@@ -63,14 +63,14 @@ const authRoutes = require("./routes/auth.js");
 const errorController = require("./controllers/error.js");
 const User = require("./models/user");
 
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "access.log"),
-  { flags: "a" } // flags: a means the data will not be overwritten instead be appended
-);
+// const accessLogStream = fs.createWriteStream(
+//   path.join(__dirname, "access.log"),
+//   { flags: "a" } // flags: a means the data will not be overwritten instead be appended
+// );
 
 app.use(helmet()); // secure the headers
 app.use(compression());
-app.use(morgan("combined", { stream: accessLogStream }));
+// app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(
