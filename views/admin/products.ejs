@@ -22,8 +22,10 @@
 
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <input type="hidden" name="productId" value="<%=product._id%>">
-                    <button class="btn danger" type="button" onclick="deleteProduct(this)"><i
+                    <button class="btn danger deleteBtn" type="button" value="<i class='fas fa-trash'></i>"><i
                             class="fas fa-trash"></i></button>
+                    <!-- <button id="deleteItem" class="btn danger" type="button" onclick="deleteProduct(this)"><i
+                            class="fas fa-trash"></i></button> -->
 
                 </div>
             </article>
