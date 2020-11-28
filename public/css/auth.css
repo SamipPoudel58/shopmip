@@ -1,0 +1,12 @@
+.login-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.form__title {
+  letter-spacing: 3px;
+
+  /* text-align: center; */
+}

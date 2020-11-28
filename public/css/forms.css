@@ -1,0 +1,37 @@
+.form-control {
+  margin: 1rem 0;
+}
+
+.form-control label,
+.form-control input,
+.form-control textarea {
+  display: block;
+  width: 100%;
+}
+
+.form-control label {
+  color: rgb(75, 73, 73);
+}
+
+.form-control input,
+.form-control textarea {
+  border: none;
+  /* border-bottom: 3px solidvar(--color-primary); */
+  border-radius: 3px;
+  padding: 12px 8px;
+  margin-top: 5px;
+  font-family: inherit;
+  background-color: #e5e5e5;
+  outline: none;
+}
+
+.form-control input.invalid,
+.form-control textarea.invalid {
+  border: 2px solid rgb(202, 17, 17);
+}
+
+.form__title {
+  letter-spacing: 3px;
+
+  /* text-align: center; */
+}

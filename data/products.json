@@ -1,0 +1,30 @@
+[
+  {
+    "id": "0.06041880392579735",
+    "title": "World War Z",
+    "imageURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS28OTtgPVm1ORl8oNvhIsxRTTmzfg2CfQ_WttazifKBKbsezXf&s",
+    "description": "A book about Brad Pitt Fighting Zombies",
+    "price": "16.66"
+  },
+  {
+    "id": "0.9839842838584252",
+    "title": "The Martian",
+    "imageURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStGnc5JnTCeLkctLXp2r3HmIR0-Y_rvGbOLp_iGNH3WSIpwmU&s",
+    "description": "Martian book is about mars",
+    "price": "6"
+  },
+  {
+    "id": "0.22438591757821058",
+    "title": "The Road",
+    "imageURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDsqmo9qt8JZV5BlFKOKCHt0OwwXgEWndUTS8PNY8yciDveMeN&s",
+    "description": "A book about road by Cormac McCarthy",
+    "price": "9"
+  },
+  {
+    "id": "0.6357147558084821",
+    "title": "Love in the time of cholera",
+    "imageURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0eI2YbzDI2uS0PwlSXs_F1ILUR1QjvcpPm1IfZWbQXlpfoWw&s",
+    "description": "A very good book about life and death",
+    "price": "8.99"
+  }
+]

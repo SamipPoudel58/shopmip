@@ -1,0 +1,49 @@
+<%- include("../includes/head.ejs")%>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include("../includes/navigation.ejs")%>
+    <div class="feat-product__wrapper">
+        <div class="featured-product">
+            <div class="featured-product__details">
+                <img class="heroLogo" src="/pictures/ps5-logo.png" alt="ps5 logo">
+                <h1>The Future Of Gaming</h1>
+                <a class="buyNow" href="/products/5fb64bff64b0392ae870eea8">BUY NOW</a>
+            </div>
+            <img class="heroImg" src="/pictures/ps5.png" alt="">
+        </div>
+    </div>
+    <main>
+        <% if(prods.length > 0){ %>
+        <h1 class="centered">Popular</h1>
+        <div class="grid">
+            <% for(let product of prods){ %>
+            <article class="card product-item">
+                <!-- <header class="card__header">
+                    <h1 class="product__title"><%= product.title %></h1>
+                </header> -->
+
+                <a href="/products/<%= product._id %>" class="test__link"> <span></span> </a>
+
+
+                <div class="card__image"><img src="<%= product.imageUrl %>" alt="<%= product.title %>" /></div>
+                <div class="card__content">
+                    <p class="product__title"><%= product.title %></p>
+                    <h3 class="product__price">$ <%= product.price %></h3>
+                </div>
+                <div class="card__actions">
+                    <a href="/products/<%= product._id %>" class="btn">Details</a>
+                    <% if(isAuthenticated) { %>
+                    <%-include("../includes/add-to-cart.ejs",{product:product})%>
+                    <% } %>
+                </div>
+            </article>
+            <% }; %>
+        </div>
+        <%-include("../includes/pagination.ejs",{currentPage,nextPage,previousPage,lastPage,hasNextPage,hasPreviousPage})%>
+        <% }else{ %>
+        <h1>No Products</h1>
+        <% } %>
+    </main>
+    <%- include("../includes/end.ejs")%>

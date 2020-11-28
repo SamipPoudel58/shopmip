@@ -1,0 +1,44 @@
+.orders {
+  list-style: none;
+  padding: 0;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.order_id {
+  margin: 0;
+  font-size: 1rem;
+
+  color: var(--color-secondary);
+  padding: 0.5rem 1rem;
+}
+
+.orders__item {
+  background-color: white;
+  box-shadow: 0 4px 3rem rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+}
+
+.orders__item a {
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+  background-color: var(--color-primary);
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+}
+
+.orders__products {
+  list-style: none;
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+
+.orders__products-item {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solidvar(--color-primary);
+  color: var(--color-primary);
+}
