@@ -42,6 +42,17 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
+exports.getSpecial = (req, res, next) => {
+  const specialProduct = req.params.prod;
+  if (specialProduct !== "ps5") {
+    return res.redirect("/");
+  }
+
+  Product.find({ title: "PlayStation 5" }).then((product) => {
+    res.redirect(`/products/${product[0]._id}`);
+  });
+};
+
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
 
