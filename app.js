@@ -30,14 +30,15 @@ const csrfProtection = csrf();
 // const certificate = fs.readFileSync("server.cert");
 
 // setup for file uploads using multer
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+// const fileStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "images");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   if (
@@ -72,10 +73,9 @@ app.use(helmet()); // secure the headers
 app.use(compression());
 // app.use(morgan("combined", { stream: accessLogStream }));
 
-app.use(express.urlencoded({ extended: false }));
-app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
-);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(multer({ storage: storage, fileFilter: fileFilter }).single("image"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 // session middleware

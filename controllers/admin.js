@@ -1,6 +1,9 @@
 const Product = require("../models/product");
 const { validationResult } = require("express-validator");
 const fileHelper = require("../util/file");
+const path = require("path");
+const { cloudinary } = require("../util/cloudinary");
+const streamifier = require("streamifier");
 
 exports.getAddProduct = (req, res, next) => {
   if (!req.session.isLoggedIn) {
@@ -16,10 +19,11 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
-exports.postAddProduct = (req, res, next) => {
+exports.postAddProduct = async (req, res, next) => {
   const { title, price, description } = req.body;
   const image = req.file;
 
+  //check for image uploaded or not
   if (!image) {
     return res.status(422).render("admin/edit-product", {
       pageTitle: "Add Product",
@@ -35,9 +39,8 @@ exports.postAddProduct = (req, res, next) => {
       validationErrors: [],
     });
   }
-
+  //check for form validation
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     return res.status(422).render("admin/edit-product", {
       pageTitle: "Add Product",
@@ -55,7 +58,27 @@ exports.postAddProduct = (req, res, next) => {
     });
   }
 
-  const imageURL = image.path.replace("\\", "/");
+  let streamUpload = (req) => {
+    return new Promise((resolve, reject) => {
+      let stream = cloudinary.uploader.upload_stream((error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      });
+
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+  };
+
+  async function upload(req) {
+    let result = await streamUpload(req);
+    return result;
+  }
+
+  const uploadedImage = await upload(req);
+  const imageURL = uploadedImage.url;
 
   const product = new Product({
     title: title,

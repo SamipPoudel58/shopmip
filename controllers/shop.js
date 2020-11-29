@@ -2,6 +2,7 @@ const Product = require("../models/product");
 const Order = require("../models/order");
 const PDFDocument = require("pdfkit");
 const { STRIPE_KEY } = process.env;
+const { cloudinary } = require("../util/cloudinary");
 
 const stripe = require("stripe")(STRIPE_KEY);
 
@@ -94,6 +95,7 @@ exports.getIndex = (req, res, next) => {
         nextPage: page + 1,
         previousPage: page - 1,
         lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
+        cloudinary: cloudinary,
       });
     })
     .catch((err) => {
