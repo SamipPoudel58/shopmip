@@ -50,9 +50,7 @@
         <li class="mobile-nav__item">
             <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
         </li>
-        <li class="mobile-nav__item">
-            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
-        </li>
+
         <% if (isAuthenticated) { %>
         <li class="mobile-nav__item">
             <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
