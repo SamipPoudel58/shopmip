@@ -78,13 +78,15 @@ exports.postAddProduct = async (req, res, next) => {
   }
 
   const uploadedImage = await upload(req);
-  const imageURL = uploadedImage.url;
+  const imageURL = uploadedImage.secure_url;
+  const publicId = uploadedImage.public_id;
 
   const product = new Product({
     title: title,
     price: price,
     description: description,
     imageUrl: imageURL,
+    publicId: publicId,
     userId: req.user,
   });
 
@@ -131,7 +133,7 @@ exports.getEditProduct = (req, res, next) => {
     });
 };
 
-exports.postEditProduct = (req, res, next) => {
+exports.postEditProduct = async (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
@@ -157,6 +159,31 @@ exports.postEditProduct = (req, res, next) => {
     });
   }
 
+  // Uploading File to cloudinary
+  let streamUpload = (req) => {
+    return new Promise((resolve, reject) => {
+      let stream = cloudinary.uploader.upload_stream((error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      });
+
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+  };
+
+  async function upload(req) {
+    let result = await streamUpload(req);
+    return result;
+  }
+
+  const uploadedImage = await upload(req);
+  const newImageURL = uploadedImage.secure_url;
+  const newPublicId = uploadedImage.public_id;
+  /////////////////////////////////////////////////////////////////////
+
   Product.findById(prodId)
     .then((product) => {
       if (product.userId.toString() !== req.user._id.toString()) {
@@ -167,8 +194,16 @@ exports.postEditProduct = (req, res, next) => {
       product.price = updatedPrice;
       product.description = updatedDesc;
       if (image) {
-        fileHelper.deleteFile(product.imageUrl);
-        product.imageUrl = image.path;
+        fileHelper
+          .deleteFile(product.publicId)
+          .then((result) => console.log("edit and delete success", result))
+          .catch((err) => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+          });
+        product.imageUrl = newImageURL;
+        product.publicId = newPublicId;
       }
       return product.save().then((result) => {
         console.log("UPDATED PRODUCT");
@@ -205,7 +240,10 @@ exports.deleteProduct = (req, res, next) => {
       if (!product) {
         return next(new Error("Product not found."));
       }
-      fileHelper.deleteFile(product.imageUrl);
+      return fileHelper.deleteFile(product.publicId);
+    })
+    .then((result) => {
+      console.log("edit and delete success", result);
       return Product.deleteOne({ _id: prodId, userId: req.user._id });
     })
     .then(() => {

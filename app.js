@@ -17,6 +17,7 @@ const multer = require("multer");
 const helmet = require("helmet");
 const compression = require("compression"); // necessary for heroku not aws,gcp,azure
 // const morgan = require("morgan");
+const { expressCspHeader, INLINE, NONE, SELF } = require("express-csp-header");
 
 // store sessions in database
 const store = new MongoDBStore({
@@ -72,6 +73,14 @@ const User = require("./models/user");
 app.use(helmet()); // secure the headers
 app.use(compression());
 // app.use(morgan("combined", { stream: accessLogStream }));
+
+app.use(
+  expressCspHeader({
+    directives: {
+      "img-src": ["'self'", "https://res.cloudinary.com"],
+    },
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
