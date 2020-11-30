@@ -21,6 +21,7 @@
 
 .product-details {
   padding: 0 1rem;
+  max-width: 500px;
 }
 
 .product-details > h1 {
