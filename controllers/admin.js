@@ -141,6 +141,9 @@ exports.postEditProduct = async (req, res, next) => {
   const updatedDesc = req.body.description;
   const errors = validationResult(req);
 
+  const newImageURL;
+  const newPublicId;
+
   if (!errors.isEmpty()) {
     return res.status(422).render("admin/edit-product", {
       pageTitle: "Edit Product",
@@ -159,29 +162,38 @@ exports.postEditProduct = async (req, res, next) => {
     });
   }
 
-  // Uploading File to cloudinary
-  let streamUpload = (req) => {
-    return new Promise((resolve, reject) => {
-      let stream = cloudinary.uploader.upload_stream((error, result) => {
-        if (result) {
-          resolve(result);
-        } else {
-          reject(error);
-        }
+  if (image) {
+    let streamUpload = (req) => {
+      return new Promise((resolve, reject) => {
+        let stream = cloudinary.uploader.upload_stream((error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
+          }
+        });
+
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
       });
+    };
 
-      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    async function upload(req) {
+      let result = await streamUpload(req);
+      return result;
+    }
+
+    const uploadedImage = await upload(req);
+    newImageURL = uploadedImage.secure_url;
+    newPublicId = uploadedImage.public_id;
+  } else {
+    Product.findById(prodId).then((product) => {
+      newImageURL = product.imageUrl;
+      newPublicId = product.publicId;
     });
-  };
-
-  async function upload(req) {
-    let result = await streamUpload(req);
-    return result;
   }
 
-  const uploadedImage = await upload(req);
-  const newImageURL = uploadedImage.secure_url;
-  const newPublicId = uploadedImage.public_id;
+  // Uploading File to cloudinary
+
   /////////////////////////////////////////////////////////////////////
 
   Product.findById(prodId)
