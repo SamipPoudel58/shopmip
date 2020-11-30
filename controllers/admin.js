@@ -141,8 +141,8 @@ exports.postEditProduct = async (req, res, next) => {
   const updatedDesc = req.body.description;
   const errors = validationResult(req);
 
-  const newImageURL;
-  const newPublicId;
+  let newImageURL;
+  let newPublicId;
 
   if (!errors.isEmpty()) {
     return res.status(422).render("admin/edit-product", {
