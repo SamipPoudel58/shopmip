@@ -28,7 +28,7 @@ button {
 }
 
 .product-item:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-8px);
 }
 
 .product__title {

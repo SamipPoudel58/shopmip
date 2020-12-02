@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { MONGO_ATLAS, MONGO_LOCAL } = process.env;
+const MONGO = MONGO_ATLAS;
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
@@ -21,7 +22,7 @@ const { expressCspHeader, INLINE, NONE, SELF } = require("express-csp-header");
 
 // store sessions in database
 const store = new MongoDBStore({
-  uri: MONGO_ATLAS,
+  uri: MONGO,
   collection: "sessions",
 });
 
@@ -138,7 +139,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(MONGO_ATLAS, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
     app.listen(process.env.PORT || 4000);
     console.log("connected to Database");

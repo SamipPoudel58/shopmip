@@ -2,7 +2,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  margin: auto;
+  margin: 0 auto 3rem;
   width: 40rem;
   max-width: 90%;
 }
@@ -14,6 +14,7 @@
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin-bottom: 1rem;
+  background-color: #fff;
 }
 
 .cart__item > img {
