@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { MONGO_ATLAS, MONGO_LOCAL } = process.env;
-const MONGO = MONGO_ATLAS;
+const MONGO = MONGO_LOCAL;
 const path = require("path");
 const fs = require("fs");
 const https = require("https");

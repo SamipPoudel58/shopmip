@@ -1,5 +1,6 @@
 const deleteButtons = document.querySelectorAll(".deleteBtn");
 let btn;
+
 deleteButtons.forEach((item) => {
   item.addEventListener("click", (e) => {
     // console.log(e.target.parentNode.querySelector("[name=productId]").value);

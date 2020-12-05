@@ -331,7 +331,7 @@ form {
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
-  align-items: stretch;
+  align-items: flex-start;
 }
 
 .admin_grid {
