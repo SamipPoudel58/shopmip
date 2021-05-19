@@ -1,3 +1,4 @@
+// for user-experience
 const deleteButtons = document.querySelectorAll(".deleteBtn");
 let btn;
 
