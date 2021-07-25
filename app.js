@@ -1,14 +1,11 @@
 require("dotenv").config();
 const { MONGO_ATLAS, MONGO_LOCAL } = process.env;
-const MONGO = MONGO_LOCAL;
+const MONGO = MONGO_ATLAS;
 const path = require("path");
-const fs = require("fs");
-const https = require("https");
 
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-
 // session
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
