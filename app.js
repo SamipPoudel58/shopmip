@@ -1,8 +1,7 @@
 require("dotenv").config();
-const { MONGO_ATLAS, MONGO_LOCAL } = process.env;
-const MONGO = MONGO_ATLAS;
+const { MONGO_ATLAS, MONGO_LOCAL,NODE_ENV } = process.env;
+const MONGO = NODE_ENV === "development" ? MONGO_LOCAL : MONGO_ATLAS;
 const path = require("path");
-
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -139,6 +138,6 @@ mongoose
   .connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
     app.listen(process.env.PORT || 4000);
-    console.log("connected to Database");
+    console.log(`connected to ${NODE_ENV} Database`);
   })
   .catch(console.log);
