@@ -1,4 +1,4 @@
-<a href="https://shopmip.herokuapp.com/">
+<a href="https://shopmip.onrender.com/">
     <img src="./public/pictures/shopmip.png" alt="shopmip preview">
   </a>
 
@@ -7,7 +7,7 @@
   <p align="center">A complete ecommerce solution for all of your shopping needs!</p>
 
   <p align="center">
-    <a href="https://shopmip.herokuapp.com/">View Demo</a>
+    <a href="https://shopmip.onrender.com/">View Demo</a>
     ·
     <a href="https://github.com/SamipPoudel58/shopmip/issues">Report Bug</a>
     ·
@@ -81,4 +81,3 @@ git add .
 git commit -m "feat: added new stuff"
 git push YOUR_REPO_URL BRANCH_NAME
 ```
-
