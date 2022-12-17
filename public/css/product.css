@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 .product-form {
   width: 20rem;
   max-width: 90%;
@@ -42,7 +41,7 @@ button {
   margin: 0;
   text-align: left;
   color: var(--color-secondary);
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 1rem;
 }
@@ -62,5 +61,5 @@ button {
 
   /* fixes overlap error in IE7/8, 
      make sure you have an empty gif */
-  background-image: url("empty.gif");
+  background-image: url('empty.gif');
 }

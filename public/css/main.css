@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Poppins:wght@700&family=Roboto&display=swap');
 :root {
   --color-primary: #1d3557;
   --color-primary: #222831;
@@ -22,7 +21,7 @@ img {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Barlow";
+  font-family: 'Barlow', 'Inter', 'Roboto', sans-serif;
   background-color: #faf9f9;
   min-height: 100vh;
 }
@@ -64,7 +63,7 @@ form {
   font-size: 2rem;
   color: white;
 
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 700;
   text-decoration: none;
 }
@@ -302,7 +301,7 @@ form {
 @media (max-width: 474px) {
   .featured-product__details > h1 {
     font-size: 1.8rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 1px;
   }
 
