@@ -1,49 +1,37 @@
-require("dotenv").config();
-const { MONGO_ATLAS, MONGO_LOCAL,NODE_ENV } = process.env;
-const MONGO = NODE_ENV === "development" ? MONGO_LOCAL : MONGO_ATLAS;
-const path = require("path");
-const express = require("express");
-const mongoose = require("mongoose");
+require('dotenv').config();
+const { MONGO_ATLAS, MONGO_LOCAL, NODE_ENV } = process.env;
+const MONGO = NODE_ENV === 'development' ? MONGO_LOCAL : MONGO_ATLAS;
+const path = require('path');
+const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 // session
-const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session);
-const csrf = require("csurf");
-const flash = require("connect-flash");
-const multer = require("multer");
-const helmet = require("helmet");
-const compression = require("compression"); // necessary for heroku not aws,gcp,azure
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
+const flash = require('connect-flash');
+const multer = require('multer');
+const helmet = require('helmet');
+const compression = require('compression'); // necessary for heroku not aws,gcp,azure
 // const morgan = require("morgan");
-const { expressCspHeader, INLINE, NONE, SELF } = require("express-csp-header");
+const { expressCspHeader, INLINE, NONE, SELF } = require('express-csp-header');
 
 // store sessions in database
 const store = new MongoDBStore({
   uri: MONGO,
-  collection: "sessions",
+  collection: 'sessions',
 });
 
 const csrfProtection = csrf();
 
-// const privateKey = fs.readFileSync("server.key");
-// const certificate = fs.readFileSync("server.cert");
-
-// setup for file uploads using multer
-// const fileStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "images");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/webp" ||
-    file.mimetype === "image/jpeg"
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/webp' ||
+    file.mimetype === 'image/jpeg'
   ) {
     cb(null, true);
   } else {
@@ -52,15 +40,15 @@ const fileFilter = (req, file, cb) => {
 };
 ////////////////////////////////////////////////////////////////////
 
-app.set("view engine", "ejs");
-app.set("views", "views");
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
-const adminRoutes = require("./routes/admin.js");
-const shopRoutes = require("./routes/shop.js");
-const authRoutes = require("./routes/auth.js");
+const adminRoutes = require('./routes/admin.js');
+const shopRoutes = require('./routes/shop.js');
+const authRoutes = require('./routes/auth.js');
 
-const errorController = require("./controllers/error.js");
-const User = require("./models/user");
+const errorController = require('./controllers/error.js');
+const User = require('./models/user');
 
 // const accessLogStream = fs.createWriteStream(
 //   path.join(__dirname, "access.log"),
@@ -69,25 +57,24 @@ const User = require("./models/user");
 
 app.use(helmet()); // secure the headers
 app.use(compression());
-// app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(
   expressCspHeader({
     directives: {
-      "img-src": ["'self'", "https://res.cloudinary.com"],
+      'img-src': ["'self'", 'https://res.cloudinary.com'],
     },
   })
 );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(multer({ storage: storage, fileFilter: fileFilter }).single("image"));
-app.use(express.static(path.join(__dirname, "public")));
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(multer({ storage: storage, fileFilter: fileFilter }).single('image'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 // session middleware
 app.use(
   session({
-    secret: "my secret",
+    secret: 'my secret',
     resave: false,
     saveUninitialized: false,
     store: store,
@@ -123,21 +110,24 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/admin", adminRoutes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
-app.get("/500", errorController.get500);
+app.get('/500', errorController.get500);
 app.use(errorController.get404);
 
 app.use((error, req, res, next) => {
-  res.redirect("/500");
+  res.redirect('/500');
 });
+
+const PORT = process.env.PORT || 4000;
 
 mongoose
   .connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
-    app.listen(process.env.PORT || 4000);
-    console.log(`connected to ${NODE_ENV} Database`);
+    app.listen(PORT);
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Connected to ${NODE_ENV} Database`);
   })
-  .catch(console.log);
+  .catch(console.err);
